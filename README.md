@@ -11,6 +11,7 @@ Converting base64 signature to binary <br>
 `openssl base64 -d -in signature.txt -out binsign.sha256` <br>
 OR <br>
 Copy contents of signature.txt to a new text file and read that into a new binary file <br>
+This even works by copying the base64 signature directly from another source <br>
 `openssl base64 -d -in copy_signature.txt -out copybin.sha256`
 
 Verifying <br>
