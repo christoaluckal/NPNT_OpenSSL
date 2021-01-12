@@ -231,5 +231,14 @@ int main() {
   char* signature = signMessage(myprivkey, permission_xml);
   bool authentic = verifySignature(mypubkey, permission_xml, signature);
   bool authentic2 = verifySignature(mypubkey, permission_xml, custom_signature);
-  std::cout << authentic << "   " << authentic2;
+  if ( authentic ) {
+    std::cout << "Authentic" << std::endl;
+  } else {
+    std::cout << "Not Authentic" << std::endl;
+  }
+  if ( authentic2 ) {
+    std::cout << "Authentic" << std::endl;
+  } else {
+    std::cout << "Not Authentic" << std::endl;
+  }
 }

@@ -1,0 +1,20 @@
+<UAPermission lastUpdated="" permissionArtifactId="0776e2f8-cb80-11ea-b6f6-88d7f63df177" ttl="" txnId="e7e9c527-30c0-49a7-82c7-d331108b6360">
+    <Permission>
+        <Owner operatorId="">
+            <Pilot uaplNo="" validTo=""></Pilot>
+        </Owner>
+        <FlightDetails>
+            <UADetails uinNo="25"></UADetails>
+            <FlightPurpose frequency="" shortDesc="Provisional test"></FlightPurpose>
+            <PayloadDetails payloadDetails="Not specified" payloadWeight="Not specified"></PayloadDetails>
+            <FlightParameters flightEndTime="2020-07-22T01:19:37.302715+05:30" flightStartTime="2020-07-21T23:58:37.302715+05:30" frequenciesUsed="">
+                <Coordinates>
+                    <Coordinate latitude="19.973348786110602" longitude="-39.375"></Coordinate>
+                    <Coordinate latitude="11.178401873711785" longitude="-45.3515625"></Coordinate>
+                    <Coordinate latitude="8.407168163601076" longitude="-28.125"></Coordinate>
+                    <Coordinate latitude="19.973348786110602" longitude="-39.375"></Coordinate>
+                </Coordinates>
+            </FlightParameters>
+        </FlightDetails>
+    </Permission>
+</UAPermission>
