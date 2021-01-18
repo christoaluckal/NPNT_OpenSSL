@@ -206,7 +206,7 @@ int main() {
     myprivkey +=placeholder;
     myprivkey +='\n';
   }
-  ifstream MyPubFile("publickey.pem");
+  ifstream MyPubFile("public.pem");
     while (getline (MyPubFile,placeholder)) {
     mypubkey +=placeholder;
     mypubkey +='\n';
@@ -217,18 +217,21 @@ int main() {
     b64signature += placeholder;
     b64signature +='\n';
   }
-  cout << b64signature;
+  cout << "BASE64   " << b64signature;
   char custom_signature[b64signature.length()+1];
   strcpy(custom_signature,b64signature.c_str());
 
   std::string permission_xml;
-  ifstream MyPermissionFile("perm.txt");
+  ifstream MyPermissionFile("codec14n.xml");
     while (getline (MyPermissionFile, placeholder)) {
     permission_xml +=placeholder;
-    permission_xml +='\n';
+    // cout << permission_xml << '\n';
+    // permission_xml +='\n';
   }
 
   char* signature = signMessage(myprivkey, permission_xml);
+  cout << '\n';
+  cout << signature << '\n';
   bool authentic = verifySignature(mypubkey, permission_xml, signature);
   bool authentic2 = verifySignature(mypubkey, permission_xml, custom_signature);
   if ( authentic ) {

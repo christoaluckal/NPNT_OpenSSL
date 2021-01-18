@@ -1,8 +1,9 @@
 #include<iostream>
 using namespace std;
 
-// Signing
-// openssl dgst -sha256 -sign private.pem -out binsign.sha256 perm.txt
+// Signing By REMOVING NEWLINE
+// cat codec14n.xml | tr -d '\n' | openssl dgst -sha256 -sign private.pem -out binsign.sha256
+// cat binsign.sha256 | openssl base64
 
 // Creating signature txt in base64
 // openssl base64 -in binsign.sha256 -out signature.txt
