@@ -1,11 +1,12 @@
-# These are the XMLs that are used in the entire operation. <br>
+# These are the XML data (XMLs, Signature txts and binary signatures) that are used in the entire operation. <br>
+## These are generated if you follow the main method <br>
 ## key: C14N = Canonicalized <br>
-1.	`bk.xml` : Backup of `codec14n.xml`
-2.	`codec14n.xml` : C14N form of SignedInfo. **Has a newline at end **
-3.	`correct.xml` : Signed XML document generated from `permission.xml` using signXML
-4.	`cPI.xml` : C14N form of `permission.xml`.  **Has no a newline at end **. Generated using `xml_proc.cpp`
-5.	`cSI.xml` : C14N form of SignedInfo.  **Has no a newline at end **.  Generated using `xml_proc.cpp`
-6.	`fin_signed.xml` : Backup of `correct.xml`
-7.	`permission.xml` : Base XML document that is being signed.
-8.	`pugi_PI.xml` : Base form of `permission.xml`. Generated using `xml_proc.cpp`
-9.	`pugi_SI.xml` : Base form of SignedInfo. Generated using `xml_proc.cpp`
+1.	`b64txt.sha256` : Binary form generated from the `signature.txt` file using openSSL commands
+2.	`binsign.sha256` : Binary signature generated during signing process using openSSL commands
+3.	`c14n_PI.xml` : C14N form of `permission.xml`.  **Has no a newline at end **. Generated from `xml_proc.cpp`
+4.	`c14n_SI.xml` : C14N form of SignedInfo.  **Has no a newline at end **.  Generated from `xml_proc.cpp`
+5.	`fin_signed.xml` : Signed XML document that is used by `xml_proc.cpp`. Generated from `sign.py` using signXML
+6.	`permission.xml` : Base XML document that is being signed.
+7.	`pugi_PI.xml` : Base form of `permission.xml`. Generated from `xml_proc.cpp`
+8.	`pugi_SI.xml` : Base form of SignedInfo. Generated from `xml_proc.cpp`
+9.	`signature.txt` : Copied from the stdout when running the `xml_proc.cpp` command
