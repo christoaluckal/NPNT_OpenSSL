@@ -201,28 +201,28 @@ int main() {
   std::string placeholder;
   std::string myprivkey;
   std::string mypubkey;
-  ifstream MyPrivFile("private.pem");
+  ifstream MyPrivFile("../keys/private.pem");
   while (getline (MyPrivFile, placeholder)) {
     myprivkey +=placeholder;
     myprivkey +='\n';
   }
-  ifstream MyPubFile("public.pem");
+  ifstream MyPubFile("../keys/public.pem");
     while (getline (MyPubFile,placeholder)) {
     mypubkey +=placeholder;
     mypubkey +='\n';
   }
   std::string b64signature;
-  ifstream MySignFile("signature.txt");
+  ifstream MySignFile("../xmls/signature.txt");
     while (getline (MySignFile, placeholder)) {
     b64signature += placeholder;
     b64signature +='\n';
   }
-  cout << "BASE64   " << b64signature;
+  cout << b64signature;
   char custom_signature[b64signature.length()+1];
   strcpy(custom_signature,b64signature.c_str());
 
   std::string permission_xml;
-  ifstream MyPermissionFile("codec14n.xml");
+  ifstream MyPermissionFile("../xmls/c14n_SI.xml");
     while (getline (MyPermissionFile, placeholder)) {
     permission_xml +=placeholder;
     // cout << permission_xml << '\n';
