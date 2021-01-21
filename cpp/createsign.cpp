@@ -206,7 +206,7 @@ int main() {
     myprivkey +=placeholder;
     myprivkey +='\n';
   }
-  ifstream MyPubFile("../keys/public.pem");
+  ifstream MyPubFile("../keys/pugi_gen_public.pem");
     while (getline (MyPubFile,placeholder)) {
     mypubkey +=placeholder;
     mypubkey +='\n';
@@ -217,7 +217,8 @@ int main() {
     b64signature += placeholder;
     b64signature +='\n';
   }
-  cout << b64signature;
+  cout << "Signature Read from TXT is:" << '\n';
+  cout << b64signature << '\n';
   char custom_signature[b64signature.length()+1];
   strcpy(custom_signature,b64signature.c_str());
 
@@ -231,17 +232,18 @@ int main() {
 
   char* signature = signMessage(myprivkey, permission_xml);
   cout << '\n';
+  cout << "Signature Generated is:" << '\n';
   cout << signature << '\n';
   bool authentic = verifySignature(mypubkey, permission_xml, signature);
   bool authentic2 = verifySignature(mypubkey, permission_xml, custom_signature);
   if ( authentic ) {
-    std::cout << "Authentic" << std::endl;
+    std::cout << "Generated signature is authentic" << std::endl;
   } else {
-    std::cout << "Not Authentic" << std::endl;
+    std::cout << "Generated signature is not Authentic" << std::endl;
   }
   if ( authentic2 ) {
-    std::cout << "Authentic" << std::endl;
+    std::cout << "Read signature is authentic" << std::endl;
   } else {
-    std::cout << "Not Authentic" << std::endl;
+    std::cout << "Read signature is not authentic" << std::endl;
   }
 }
