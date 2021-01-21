@@ -1,4 +1,6 @@
-# These are the XML data (XMLs, Signature txts and binary signatures) that are used in the entire operation. <br>
+# This is the XML data that is to be signed <br>
+
+1.	`permission.xml` : Base XML document that is being signed. <br>
 ## These are generated if you follow the main method <br>
 ## key: C14N = Canonicalized <br>
 1.	`b64txt.sha256` : Binary form generated from the `signature.txt` file using openSSL commands
