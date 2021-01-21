@@ -5,7 +5,7 @@ NPNT Compliance using OpenSSL CMD/CXX API
 Method
 1.  `cd pys/` <br>
   **a.  CD into the python scripts**
-2. `python3 pys/sign.py` <br>
+2. `python3 sign.py` <br>
   a.  Execute the `sign.py` script which will create `fin_signed.xml` in `xmls/` directory
 3.  `cd ../cpp` <br>
   **a.  CD into the CPP directory**
