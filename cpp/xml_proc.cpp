@@ -36,7 +36,7 @@ void savePermissionInfo(std::string path){
     signed_info = strstre.str(); // Get string form of the ostream.
     doc2.load_string(signed_info.c_str()); // Load the string into an empty root. Here signed_info: <UAPermission>...</UAPermission>
     doc2.child("UAPermission").remove_child("Signature"); // Keep only the Permission Tag and Remove the Signature Tag.
-    doc2.save_file("../xmls/pugi_PI.xml","", pugi::format_raw | pugi::format_no_declaration); // Save to new XML file.
+    doc2.save_file("temp/pugi_PI.xml","", pugi::format_raw | pugi::format_no_declaration); // Save to new XML file.
 }
 
 /*
@@ -54,7 +54,7 @@ void saveSignedInfo(std::string path){
     doc.child("UAPermission").child("Signature").child("SignedInfo").print(strstre, "", pugi::format_raw | pugi::format_no_declaration);
     signed_info = strstre.str();
     doc2.load_string(signed_info.c_str());
-    doc2.save_file("../xmls/pugi_SI.xml","", pugi::format_raw | pugi::format_no_declaration);
+    doc2.save_file("temp/pugi_SI.xml","", pugi::format_raw | pugi::format_no_declaration);
 
 }
 
@@ -70,9 +70,21 @@ void saveX509Key(std::string path){
     std::string x509_key = "-----BEGIN CERTIFICATE-----\n"; // Saving as the specified x509 certificate format.
     x509_key += x509key.first_child().value();
     x509_key += "-----END CERTIFICATE-----";
-    std::ofstream out("../keys/pugi_certificate.pem");
+    std::ofstream out("temp/pugi_certificate.pem");
     out << x509_key;
     out.close();
+}
+
+/*
+Function to canonicalize and remove the new-line at the end of the XML.
+IMPORTANT for the signing and verification purposes.
+param path: Path to the final signed XML file.
+*/
+void cleanXml(std::string path){
+    // cout << "Enter Canonicalized name and Path for " << path << " eg. (../xmls/<name>)" << '\n';
+    cout << "Saving " << "Canonicalized "<< path << " to " << "c14n_"+path.substr(5) << '\n';
+    std::string command = "xmllint -c14n11 "+path+"| tr -d '\\n' > temp/c14n_"+path.substr(5);
+    system(command.c_str());
 }
 
 
@@ -87,6 +99,18 @@ std::string getSignatureValue(std::string path){
     return sv.first_child().value();
 }
 
+void updateDigestValue(std::string path,std::string new_digest){
+    pugi::xml_document doc;
+    std::string updated_path;
+    doc.load_file(path.c_str());
+    pugi::xml_node dv = doc.child("SignedInfo").child("Reference").child("DigestValue");
+    // std::cout << "CURRENT HASH IS:  " << dv.first_child().value() << '\n';
+    // std::cout << "NEW HASH IS:  " << new_digest << '\n';
+    dv.first_child().set_value(new_digest.c_str());
+    // std::cout << "UPDATED HASH IS:  " << dv.first_child().value() << '\n';
+    doc.save_file(path.c_str(),"", pugi::format_raw | pugi::format_no_declaration);
+}
+
 /*
 Function to extract the base64 encoded DigestValue from the signed xml.
 param path: Path to the final signed XML file.
@@ -98,31 +122,32 @@ std::string getDigestValue(std::string path){
     return dv.first_child().value();
 }
 
-/*
-Function to canonicalize and remove the new-line at the end of the XML.
-IMPORTANT for the signing and verification purposes.
-param path: Path to the final signed XML file.
-*/
-void cleanXml(std::string path){
-    std::string c14path;
-    cout << "Enter Canonicalized name and Path for " << path << " eg. (../xmls/<name>)" << '\n';
-    cin >> c14path;
-    cout << "Saving " << "Canonicalized "<< path << "to " << c14path << '\n';
-    std::string command = "xmllint -c14n11 "+path+"| tr -d '\\n' > "+c14path;
-    system(command.c_str());
-}
 
-int main()
+// int main()
+// {
+//     saveSignedInfo("../xmls/fin_signed.xml");
+//     savePermissionInfo("../xmls/fin_signed.xml");
+//     saveX509Key("../xmls/fin_signed.xml");
+//     std::string signatureValue = getSignatureValue("../xmls/fin_signed.xml");
+//     std::cout << "Signature Value:" << signatureValue << '\n';
+//     std::string digestValue = getDigestValue("../xmls/fin_signed.xml");
+//     std::cout << "Digest Value:" << digestValue << '\n';
+//     cleanXml("../xmls/pugi_SI.xml");
+//     cleanXml("../xmls/pugi_PI.xml");
+// // simple_walker walker;
+// // doc.traverse(walker);
+// }
+
+void parseXML(std::string path_to_signed_xml)
 {
-    saveSignedInfo("../xmls/fin_signed.xml");
-    savePermissionInfo("../xmls/fin_signed.xml");
-    saveX509Key("../xmls/fin_signed.xml");
-    std::string signatureValue = getSignatureValue("../xmls/fin_signed.xml");
-    std::cout << "Signature Value:" << signatureValue << '\n';
-    std::string digestValue = getDigestValue("../xmls/fin_signed.xml");
-    std::cout << "Digest Value:" << digestValue << '\n';
-    cleanXml("../xmls/pugi_SI.xml");
-    cleanXml("../xmls/pugi_PI.xml");
+    saveSignedInfo(path_to_signed_xml);
+    savePermissionInfo(path_to_signed_xml);
+    saveX509Key(path_to_signed_xml);
+    std::string signatureValue = getSignatureValue(path_to_signed_xml);
+    std::string digestValue = getDigestValue(path_to_signed_xml);
+    std::string temp1,temp2;
+    cleanXml("temp/pugi_SI.xml");
+    cleanXml("temp/pugi_PI.xml");
 // simple_walker walker;
 // doc.traverse(walker);
 }

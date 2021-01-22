@@ -268,61 +268,81 @@ const char *func_command = command.c_str();
 
 }
 
-
-int main() {
+std::string readFile(std::string location){
+  ifstream MyFile(location);
   std::string placeholder;
-  std::string myprivkey;
-  std::string mypubkey;
-  std::string privateKeyLocation = "../keys/private.pem";
-  std::string publicKeyLocation = "../keys/pugi_gen_public.pem";
-  std::string signatureLocation = "../xmls/signature.txt";
-  std::string c14nSignedInfoLocation = "../xmls/c14n_SI.xml";
-  std::string c14nPermissionLocation = "../xmls/c14n_PI.xml";
-  ifstream MyPrivFile(privateKeyLocation);
-  while (getline (MyPrivFile, placeholder)) {
-    myprivkey +=placeholder;
-    myprivkey +='\n';
+  std::string output;
+  while (getline (MyFile, placeholder)) {
+    output +=placeholder;
+    output +='\n';
   }
-  ifstream MyPubFile(publicKeyLocation);
-    while (getline (MyPubFile,placeholder)) {
-    mypubkey +=placeholder;
-    mypubkey +='\n';
-  }
-  std::string b64signature;
-  ifstream MySignFile(signatureLocation);
-    while (getline (MySignFile, placeholder)) {
-    b64signature += placeholder;
-    b64signature +='\n';
-  }
-  cout << "Signature Read from TXT is:" << '\n';
-  cout << b64signature << '\n';
-  char custom_signature[b64signature.length()+1];
-  strcpy(custom_signature,b64signature.c_str());
-
-  std::string permission_xml;
-  ifstream MyPermissionFile(c14nSignedInfoLocation);
-    while (getline (MyPermissionFile, placeholder)) {
-    permission_xml +=placeholder;
-    // cout << permission_xml << '\n';
-    // permission_xml +='\n';
-  }
-  // std::cout << sha256(permission_xml);
-  std::string hash = getFileBinaryHashb64(c14nPermissionLocation);
-  std::cout << "BASE64 encoded hash of PI is: " << hash << '\n';
-  char* signature = signMessage(myprivkey, permission_xml);
-  cout << '\n';
-  cout << "Signature Generated is:" << '\n';
-  cout << signature << '\n';
-  bool authentic = verifySignature(mypubkey, permission_xml, signature);
-  bool authentic2 = verifySignature(mypubkey, permission_xml, custom_signature);
-  if ( authentic ) {
-    std::cout << "Generated signature is authentic" << std::endl;
-  } else {
-    std::cout << "Generated signature is not Authentic" << std::endl;
-  }
-  if ( authentic2 ) {
-    std::cout << "Read signature is authentic" << std::endl;
-  } else {
-    std::cout << "Read signature is not authentic" << std::endl;
-  }
+  return output;
 }
+
+std::string readSignedInfo(std::string location){
+  ifstream MyFile(location);
+  std::string placeholder;
+  std::string output;
+  while (getline (MyFile, placeholder)) {
+    output +=placeholder;
+  }
+  return output;
+}
+
+
+// int main() {
+//   std::string placeholder;
+//   std::string myprivkey;
+//   std::string mypubkey;
+//   std::string b64signature;
+//   std::string privateKeyLocation = "../keys/private.pem";
+//   std::string publicKeyLocation = "../keys/pugi_gen_public.pem";
+//   std::string signatureLocation = "../xmls/signature.txt";
+//   std::string c14nSignedInfoLocation = "../xmls/c14n_SI.xml";
+//   std::string c14nPermissionLocation = "../xmls/c14n_PI.xml";
+//   std::string signed_info;
+//   // ifstream MyPrivFile(privateKeyLocation);
+//   // while (getline (MyPrivFile, placeholder)) {
+//   //   myprivkey +=placeholder;
+//   //   myprivkey +='\n';
+//   // }
+//   // myprivkey = readFile(privateKeyLocation);
+//   // ifstream MyPubFile(publicKeyLocation);
+//   //   while (getline (MyPubFile,placeholder)) {
+//   //   mypubkey +=placeholder;
+//   //   mypubkey +='\n';
+//   // }
+//   mypubkey = readFile(publicKeyLocation);
+
+//   b64signature = readFile(signatureLocation);
+//   // cout << "Signature Read from TXT is:" << '\n';
+//   // cout << b64signature << '\n';
+//   char custom_signature[b64signature.length()+1];
+//   strcpy(custom_signature,b64signature.c_str());
+
+//   signed_info = readSignedInfo(c14nSignedInfoLocation);
+//   // int pos = 0;
+//   // pos = signed_info.find('\n');
+//   // signed_info.erase(pos);
+  
+//   // std::cout << sha256(permission_xml);
+//   std::string hash = getFileBinaryHashb64(c14nPermissionLocation);
+//   // std::cout << "BASE64 encoded hash of PI is: " << hash << '\n';
+//   // char* signature = signMessage(myprivkey, signed_info);
+//   // cout << '\n';
+//   // cout << "Signature Generated is:" << '\n';
+//   // cout << signature << '\n';
+//   // bool authentic = verifySignature(mypubkey, signed_info, signature);
+//   std::cout << mypubkey << signed_info << custom_signature;
+//   bool authentic2 = verifySignature(mypubkey, signed_info, custom_signature);
+//   // if ( authentic ) {
+//   //   std::cout << "Generated signature is authentic" << std::endl;
+//   // } else {
+//   //   std::cout << "Generated signature is not Authentic" << std::endl;
+//   // }
+//   if ( authentic2 ) {
+//     std::cout << "Read signature is authentic" << std::endl;
+//   } else {
+//     std::cout << "Read signature is not authentic" << std::endl;
+//   }
+// }
