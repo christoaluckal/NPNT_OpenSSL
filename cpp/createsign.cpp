@@ -9,8 +9,10 @@
 #include <openssl/ssl.h>
 #include <openssl/bio.h>
 #include <openssl/err.h>
+#include <openssl/sha.h>
 #include <string.h>
 #include <assert.h>
+#include <iomanip>
 using namespace std;
 
 // std::string privateKey ="-----BEGIN RSA PRIVATE KEY-----\n"\
@@ -50,6 +52,8 @@ using namespace std;
 // "PpY72+eVthKzpMeyHkBn7ciumk5qgLTEJAfWZpe4f4eFZj/Rc8Y8Jj2IS5kVPjUy\n"\
 // "wQIDAQAB\n"\
 // "-----END PUBLIC KEY-----\n";
+
+
 
 RSA* createPrivateRSA(std::string key) {
   RSA *rsa = NULL;
@@ -197,22 +201,95 @@ bool verifySignature(std::string publicKey, std::string plainText, char* signatu
   return result & authentic;
 }
 
+// std::string sha256(std::string str)
+// {
+//     unsigned char hash[SHA256_DIGEST_LENGTH];
+//     SHA256_CTX sha256;
+//     SHA256_Init(&sha256);
+//     SHA256_Update(&sha256, str.c_str(), str.size());
+//     SHA256_Final(hash, &sha256);
+//     stringstream ss;
+//     for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+//     {
+//         ss << hex << setw(2) << setfill('0') << (int)hash[i];
+//     }
+//     return ss.str();
+// }
+
+// https://stackoverflow.com/questions/29416549/getting-hash-of-a-binary-file-c
+std::string getFileBinaryHashb64(std::string fileName){
+
+  // THIS STOPPED WORKING SUDDENLY. INVESTIGATE.
+// unsigned char result[2*SHA256_DIGEST_LENGTH];
+// unsigned char hash[SHA256_DIGEST_LENGTH];
+// int i;
+// FILE *f = fopen("../xmls/c14n_PI.xml","rb");
+// SHA256_CTX sha256;
+// int bytes;
+// unsigned char data[1024];
+// if(f == NULL){
+//     std::cout << "Couldnt open file:" << fileName << '\n';
+//     exit(1);
+// }
+// SHA256_Init(&sha256);
+// while((bytes = fread(data, 1, 1024, f)) != 0){
+//     SHA256_Update(&sha256, data, bytes);
+// }
+// SHA256_Final(hash, &sha256);
+
+// for(i=0;i<SHA256_DIGEST_LENGTH;i++){
+//     printf("%02x",hash[i]);
+// }
+// printf("\n");
+// /** if you want to see the plain text of the hash */
+// for(i=0; i < SHA256_DIGEST_LENGTH;i++){
+//     sprintf((char *)&(result[i*2]), "%02x",hash[i]);
+// }
+// std::string output(reinterpret_cast<char*>(result));
+// printf("RESULT IS :%s\n",result);
+// fclose(f);
+// return output;
+
+std::string command = "openssl dgst -binary -sha256 "+fileName+" | openssl base64";
+const char *func_command = command.c_str();
+  FILE *fpipe; // Initializing FILE pointer to get the contents of the pipe
+  char c = 0; // Character for reading output
+  int pos = 0;
+  std::string output{}; // Output of each path
+  fpipe = (FILE *)popen(func_command, "r"); //Read the output pipe of the command
+  while (fread(&c, sizeof c, 1, fpipe)) {
+    output += c;
+  }
+  pos = output.find('\n');
+  output.erase(pos);
+  // std::cout << output << '\n';
+  pclose(fpipe);
+  return output;
+
+}
+
+
 int main() {
   std::string placeholder;
   std::string myprivkey;
   std::string mypubkey;
-  ifstream MyPrivFile("../keys/private.pem");
+  std::string privateKeyLocation = "../keys/private.pem";
+  std::string publicKeyLocation = "../keys/pugi_gen_public.pem";
+  std::string signatureLocation = "../xmls/signature.txt";
+  std::string c14nSignedInfoLocation = "../xmls/c14n_SI.xml";
+  std::string c14nPermissionLocation = "../xmls/c14n_PI.xml";
+  ifstream MyPrivFile(privateKeyLocation);
   while (getline (MyPrivFile, placeholder)) {
     myprivkey +=placeholder;
     myprivkey +='\n';
   }
-  ifstream MyPubFile("../keys/pugi_gen_public.pem");
+  ifstream MyPubFile(publicKeyLocation);
     while (getline (MyPubFile,placeholder)) {
     mypubkey +=placeholder;
     mypubkey +='\n';
   }
   std::string b64signature;
-  ifstream MySignFile("../xmls/signature.txt");
+  ifstream MySignFile(signatureLocation);
     while (getline (MySignFile, placeholder)) {
     b64signature += placeholder;
     b64signature +='\n';
@@ -223,13 +300,15 @@ int main() {
   strcpy(custom_signature,b64signature.c_str());
 
   std::string permission_xml;
-  ifstream MyPermissionFile("../xmls/c14n_SI.xml");
+  ifstream MyPermissionFile(c14nSignedInfoLocation);
     while (getline (MyPermissionFile, placeholder)) {
     permission_xml +=placeholder;
     // cout << permission_xml << '\n';
     // permission_xml +='\n';
   }
-
+  // std::cout << sha256(permission_xml);
+  std::string hash = getFileBinaryHashb64(c14nPermissionLocation);
+  std::cout << "BASE64 encoded hash of PI is: " << hash << '\n';
   char* signature = signMessage(myprivkey, permission_xml);
   cout << '\n';
   cout << "Signature Generated is:" << '\n';
