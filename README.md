@@ -11,5 +11,5 @@ Method
   **a.  CD into the main directory**
 4. `./check_signature.sh` <br>
   a.  Make sure that the script has proper permissions.
-<br>
- To verify if checking works, change a value in the permission tag in the `xmls/fin_signed.xml` file
+
+To verify if checking works, change a value in the permission tag in the `xmls/fin_signed.xml` file
