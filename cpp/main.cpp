@@ -47,12 +47,12 @@ int main(int argc, char *argv[])
     strcpy(signature,signatureValue.c_str());
     bool authentic = verifySignature(publicKey,c14SignedInfo,signature); // Perform Verification
     if(authentic){
-        std::cout << "Signature is Valid" << '\n';
+        std::cout << "Valid permission XML" << '\n';
         deleteTemp();
         return EXIT_SUCCESS;
     }
     else{
-        std::cout << "Invalid Signature" << '\n';
+        std::cout << "Invalid permission XML" << '\n';
         deleteTemp();
         return EXIT_FAILURE;
     }

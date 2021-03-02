@@ -15,46 +15,6 @@
 #include <iomanip>
 using namespace std;
 
-// std::string privateKey ="-----BEGIN RSA PRIVATE KEY-----\n"\
-// "MIIEowIBAAKCAQEAy8Dbv8prpJ/0kKhlGeJYozo2t60EG8L0561g13R29LvMR5hy\n"\
-// "vGZlGJpmn65+A4xHXInJYiPuKzrKUnApeLZ+vw1HocOAZtWK0z3r26uA8kQYOKX9\n"\
-// "Qt/DbCdvsF9wF8gRK0ptx9M6R13NvBxvVQApfc9jB9nTzphOgM4JiEYvlV8FLhg9\n"\
-// "yZovMYd6Wwf3aoXK891VQxTr/kQYoq1Yp+68i6T4nNq7NWC+UNVjQHxNQMQMzU6l\n"\
-// "WCX8zyg3yH88OAQkUXIXKfQ+NkvYQ1cxaMoVPpY72+eVthKzpMeyHkBn7ciumk5q\n"\
-// "gLTEJAfWZpe4f4eFZj/Rc8Y8Jj2IS5kVPjUywQIDAQABAoIBADhg1u1Mv1hAAlX8\n"\
-// "omz1Gn2f4AAW2aos2cM5UDCNw1SYmj+9SRIkaxjRsE/C4o9sw1oxrg1/z6kajV0e\n"\
-// "N/t008FdlVKHXAIYWF93JMoVvIpMmT8jft6AN/y3NMpivgt2inmmEJZYNioFJKZG\n"\
-// "X+/vKYvsVISZm2fw8NfnKvAQK55yu+GRWBZGOeS9K+LbYvOwcrjKhHz66m4bedKd\n"\
-// "gVAix6NE5iwmjNXktSQlJMCjbtdNXg/xo1/G4kG2p/MO1HLcKfe1N5FgBiXj3Qjl\n"\
-// "vgvjJZkh1as2KTgaPOBqZaP03738VnYg23ISyvfT/teArVGtxrmFP7939EvJFKpF\n"\
-// "1wTxuDkCgYEA7t0DR37zt+dEJy+5vm7zSmN97VenwQJFWMiulkHGa0yU3lLasxxu\n"\
-// "m0oUtndIjenIvSx6t3Y+agK2F3EPbb0AZ5wZ1p1IXs4vktgeQwSSBdqcM8LZFDvZ\n"\
-// "uPboQnJoRdIkd62XnP5ekIEIBAfOp8v2wFpSfE7nNH2u4CpAXNSF9HsCgYEA2l8D\n"\
-// "JrDE5m9Kkn+J4l+AdGfeBL1igPF3DnuPoV67BpgiaAgI4h25UJzXiDKKoa706S0D\n"\
-// "4XB74zOLX11MaGPMIdhlG+SgeQfNoC5lE4ZWXNyESJH1SVgRGT9nBC2vtL6bxCVV\n"\
-// "WBkTeC5D6c/QXcai6yw6OYyNNdp0uznKURe1xvMCgYBVYYcEjWqMuAvyferFGV+5\n"\
-// "nWqr5gM+yJMFM2bEqupD/HHSLoeiMm2O8KIKvwSeRYzNohKTdZ7FwgZYxr8fGMoG\n"\
-// "PxQ1VK9DxCvZL4tRpVaU5Rmknud9hg9DQG6xIbgIDR+f79sb8QjYWmcFGc1SyWOA\n"\
-// "SkjlykZ2yt4xnqi3BfiD9QKBgGqLgRYXmXp1QoVIBRaWUi55nzHg1XbkWZqPXvz1\n"\
-// "I3uMLv1jLjJlHk3euKqTPmC05HoApKwSHeA0/gOBmg404xyAYJTDcCidTg6hlF96\n"\
-// "ZBja3xApZuxqM62F6dV4FQqzFX0WWhWp5n301N33r0qR6FumMKJzmVJ1TA8tmzEF\n"\
-// "yINRAoGBAJqioYs8rK6eXzA8ywYLjqTLu/yQSLBn/4ta36K8DyCoLNlNxSuox+A5\n"\
-// "w6z2vEfRVQDq4Hm4vBzjdi3QfYLNkTiTqLcvgWZ+eX44ogXtdTDO7c+GeMKWz4XX\n"\
-// "uJSUVL5+CVjKLjZEJ6Qc2WZLl94xSwL71E41H4YciVnSCQxVc4Jw\n"\
-// "-----END RSA PRIVATE KEY-----\n\0";
-
-// std::string publicKey ="-----BEGIN PUBLIC KEY-----\n"\
-// "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy8Dbv8prpJ/0kKhlGeJY\n"\
-// "ozo2t60EG8L0561g13R29LvMR5hyvGZlGJpmn65+A4xHXInJYiPuKzrKUnApeLZ+\n"\
-// "vw1HocOAZtWK0z3r26uA8kQYOKX9Qt/DbCdvsF9wF8gRK0ptx9M6R13NvBxvVQAp\n"\
-// "fc9jB9nTzphOgM4JiEYvlV8FLhg9yZovMYd6Wwf3aoXK891VQxTr/kQYoq1Yp+68\n"\
-// "i6T4nNq7NWC+UNVjQHxNQMQMzU6lWCX8zyg3yH88OAQkUXIXKfQ+NkvYQ1cxaMoV\n"\
-// "PpY72+eVthKzpMeyHkBn7ciumk5qgLTEJAfWZpe4f4eFZj/Rc8Y8Jj2IS5kVPjUy\n"\
-// "wQIDAQAB\n"\
-// "-----END PUBLIC KEY-----\n";
-
-
-
 RSA* createPrivateRSA(std::string key) {
   RSA *rsa = NULL;
   const char* c_string = key.c_str();
@@ -201,21 +161,6 @@ bool verifySignature(std::string publicKey, std::string plainText, char* signatu
   return result & authentic;
 }
 
-// std::string sha256(std::string str)
-// {
-//     unsigned char hash[SHA256_DIGEST_LENGTH];
-//     SHA256_CTX sha256;
-//     SHA256_Init(&sha256);
-//     SHA256_Update(&sha256, str.c_str(), str.size());
-//     SHA256_Final(hash, &sha256);
-//     stringstream ss;
-//     for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-//     {
-//         ss << hex << setw(2) << setfill('0') << (int)hash[i];
-//     }
-//     return ss.str();
-// }
-
 // https://stackoverflow.com/questions/29416549/getting-hash-of-a-binary-file-c
 std::string getFileBinaryHashb64(std::string fileName){
 
@@ -288,61 +233,3 @@ std::string readSignedInfo(std::string location){
   }
   return output;
 }
-
-
-// int main() {
-//   std::string placeholder;
-//   std::string myprivkey;
-//   std::string mypubkey;
-//   std::string b64signature;
-//   std::string privateKeyLocation = "../keys/private.pem";
-//   std::string publicKeyLocation = "../keys/pugi_gen_public.pem";
-//   std::string signatureLocation = "../xmls/signature.txt";
-//   std::string c14nSignedInfoLocation = "../xmls/c14n_SI.xml";
-//   std::string c14nPermissionLocation = "../xmls/c14n_PI.xml";
-//   std::string signed_info;
-//   // ifstream MyPrivFile(privateKeyLocation);
-//   // while (getline (MyPrivFile, placeholder)) {
-//   //   myprivkey +=placeholder;
-//   //   myprivkey +='\n';
-//   // }
-//   // myprivkey = readFile(privateKeyLocation);
-//   // ifstream MyPubFile(publicKeyLocation);
-//   //   while (getline (MyPubFile,placeholder)) {
-//   //   mypubkey +=placeholder;
-//   //   mypubkey +='\n';
-//   // }
-//   mypubkey = readFile(publicKeyLocation);
-
-//   b64signature = readFile(signatureLocation);
-//   // cout << "Signature Read from TXT is:" << '\n';
-//   // cout << b64signature << '\n';
-//   char custom_signature[b64signature.length()+1];
-//   strcpy(custom_signature,b64signature.c_str());
-
-//   signed_info = readSignedInfo(c14nSignedInfoLocation);
-//   // int pos = 0;
-//   // pos = signed_info.find('\n');
-//   // signed_info.erase(pos);
-  
-//   // std::cout << sha256(permission_xml);
-//   std::string hash = getFileBinaryHashb64(c14nPermissionLocation);
-//   // std::cout << "BASE64 encoded hash of PI is: " << hash << '\n';
-//   // char* signature = signMessage(myprivkey, signed_info);
-//   // cout << '\n';
-//   // cout << "Signature Generated is:" << '\n';
-//   // cout << signature << '\n';
-//   // bool authentic = verifySignature(mypubkey, signed_info, signature);
-//   std::cout << mypubkey << signed_info << custom_signature;
-//   bool authentic2 = verifySignature(mypubkey, signed_info, custom_signature);
-//   // if ( authentic ) {
-//   //   std::cout << "Generated signature is authentic" << std::endl;
-//   // } else {
-//   //   std::cout << "Generated signature is not Authentic" << std::endl;
-//   // }
-//   if ( authentic2 ) {
-//     std::cout << "Read signature is authentic" << std::endl;
-//   } else {
-//     std::cout << "Read signature is not authentic" << std::endl;
-//   }
-// }

@@ -1,4 +1,5 @@
 #include "../pugi/pugixml.hpp"
+#include "testC14N.h"
 #include <iostream>
 #include <assert.h>
 #include <memory>
@@ -83,8 +84,13 @@ param path: Path to the final signed XML file.
 void cleanXml(std::string path){
     // cout << "Enter Canonicalized name and Path for " << path << " eg. (../xmls/<name>)" << '\n';
     cout << "Saving " << "Canonicalized "<< path << " to " << "c14n_"+path.substr(5) << '\n';
-    std::string command = "xmllint -c14n11 "+path+"| tr -d '\\n' > temp/c14n_"+path.substr(5);
-    system(command.c_str());
+    // std::string command = "xmllint -c14n11 "+path+"| tr -d '\\n' > temp/c14n_"+path.substr(5);
+    std::string c14n = finC14N(path);
+    std::string output = "temp/c14n_"+path.substr(5);
+    std::ofstream out(output);
+    out << c14n;
+    out.close();
+    // system(command.c_str());
 }
 
 
