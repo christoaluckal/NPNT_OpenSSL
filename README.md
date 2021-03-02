@@ -2,7 +2,7 @@
 NPNT using OpenSSL CMD/CXX API
 
 Signing <br>
-`openssl dgst -sha256 -sign private.pem -out binsign.sha256 perm.txt` <br>
+`openssl dgst -sha256 -sign private.pem -out binsign.sha256 perm.txt`  <br>
 
 Creating signature txt in base64 <br>
 `openssl base64 -in binsign.sha256 -out signature.txt` <br>
