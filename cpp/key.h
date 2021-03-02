@@ -1,0 +1,1 @@
+std::string get_key_from_certfile(const char* certfile);
