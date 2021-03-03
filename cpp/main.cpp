@@ -1,7 +1,7 @@
 #include<iostream>
 #include "xml_proc.h"
 #include "createsign.h"
-
+#include "key.h"
 // All verification files are made in temp directory
 void makeTemp(){
     std::string command = "mkdir temp";
@@ -11,8 +11,14 @@ void makeTemp(){
 
 // openSSL command is used to extract public key from the certificate generated during parseXML()
 void genPubKey(){
-    std::string command = "openssl x509 -pubkey -noout -in temp/pugi_certificate.pem > temp/pugi_gen_public.pem";
-    system(command.c_str());
+    // std::string command = "openssl x509 -pubkey -noout -in temp/pugi_certificate.pem > temp/pugi_gen_public.pem";
+    // system(command.c_str());
+    std::string cert_location = "temp/pugi_certificate.pem";
+    std::string pubkey = get_key_from_certfile(cert_location.c_str());
+    std::string output = "temp/pugi_gen_public.pem";
+    std::ofstream out(output);
+    out << pubkey;
+    out.close();
     return;
 }
 

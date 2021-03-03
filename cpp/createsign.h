@@ -32,6 +32,7 @@ size_t calcDecodeLength(const char* b64input);
 void Base64Decode(const char* b64message, unsigned char** buffer, size_t* length);
 char* signMessage(std::string privateKey, std::string plainText);
 bool verifySignature(std::string publicKey, std::string plainText, char* signatureBase64);
+std::string Base64Encode(std::string input_text);
 std::string getFileBinaryHashb64(std::string fileName);
 std::string readFile(std::string location);
 std::string readSignedInfo(std::string location);
