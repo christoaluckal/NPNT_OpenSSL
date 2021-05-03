@@ -9,3 +9,4 @@ xmls/fin_signed.xml
 xmls/pugi_PI.xml
 xmls/pugi_SI.xml
 xmls/signature.txt
+build/*

@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 2.8.9)
+project(NPNT_OpenSSL)
+include_directories(include)
+include_directories(/usr/include/libxml2)
+file(GLOB SOURCES "cpp/*.cpp")
+set(PUGI "pugi/pugixml.cpp")
+add_executable(main ${SOURCES} ${PUGI})
+target_link_libraries(main -lxml2)
+target_link_libraries(main -lcrypto)
+
