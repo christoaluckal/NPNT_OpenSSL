@@ -5,16 +5,25 @@ NPNT Compliance using OpenSSL CMD/CXX API
 1. LibXML (libxml2) at ftp://xmlsoft.org/libxml2/
 
 ## Follow the method to verify signature <br>
-Method
+### Initial Procedure ###
+Perform these steps to generate a sample signed XML file
 1.  `cd pys/` <br>
   **a.  CD into the python scripts**
 2. `python3 sign.py` <br>
-  a.  Execute the `sign.py` script which will create `fin_signed.xml` in `xmls/` directory. **This is performed only once**
-3.  `cd ..` <br>
-  **a.  CD into the main directory**
-4. `./check_signature.sh` <br>
-  a.  Make sure that the script has proper permissions. <br>
-5. You can also build using cmake as follows <br>
+  a.  Execute the `sign.py` script which will create `fin_signed.xml` in `xmls/` directory. <br> 
+  
+  
+**This is performed only once**
+  
+### Verification ###
+
+#### Using the shell script ####
+1.  cd into the main directory
+2. `./check_signature.sh` <br>
+  a.  Make sure that the script has proper permissions using the `chmod 777 check_signature.sh` <br>
+  
+#### Using CMake ####
+1. You can also build using CMake as follows <br>
   a.	Go to the root directory and use `mkdir build && cd build` <br>
   b.	`cmake ..` <br>
   c.	`make` <br>
