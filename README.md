@@ -25,8 +25,8 @@ To verify if checking works, change a value in the permission tag in the `xmls/f
 ## How it works ##
 0. Read the info at https://www.w3.org/TR/xmldsig-core1/ to understand the basic idea.
 1. In step 1 of the above mentioned Method, we use the base `permission.xml` to generate a signed version called as `fin_signed.xml`
-2. When the main script is executed, it compiles and executes the C++ codes in the `cpp` folder. <br>
-   a. The first step creates a folder called as `temp` in the `cpp` directory. This folder as its name suggests, temporarily holds the files for the verification process. The folder and its contents are deleted once the program is executed irrespective of the outcome. <br>
+2. When the main script is executed, it compiles the C++ codes in the `cpp` folder. <br>
+   a. The first step creates a folder called as `temp`. This folder as its name suggests, temporarily holds the files for the verification process. The folder and its contents are deleted once the program is executed irrespective of the outcome. <br>
    b. During the verification process, the `fin_signed.xml` is not in the required format. Hence, we parse this XML and convert it into the desired format. From the formatted XML file, we extract the canonicalized version of the `SignedInfo` and the `Permission` tag content. We also extract the base64 encoded X509 certificate credentials. <br>
    c. Once the desired data is extracted from the XML, we extract the public key from the X509 certificate. This public key is used for the signature verification process. <br>
    d. We now hash the canonicalized `Permission` tag content saved in the file `temp/c14n_pugi_PI.xml` and save the hash into a string. We also extract the hash value stored in the `DigestValue` of the signed XML in `fin_signed.xml`. The hash of the `DigestValue` in the `temp/c14n_pugi_SI.xml` is replaced with the calculated hash (**NOT THE EXTRACTED ONE**). If the file has not been tampered with, the calculated hash will be the same as the extracted hash. `temp/c14n_pugi_SI.xml` is once again canonicalized into `temp/c14n_c14n_pugi_SI.xml` to ensure formatting accuracy. <br>
